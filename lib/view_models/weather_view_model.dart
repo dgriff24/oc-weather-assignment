@@ -22,7 +22,7 @@ class WeatherViewModel extends ChangeNotifier {
 
   String get windDirection {
     final dir = _weatherData.windDirection;
-
+    // I made a change
     // TODO add logic to convert the direction to N, NNE, NE, ENE, E, ESE, SE, SSE, S, SSW, SW, WSW, W, WNW, NW, NNW
     return 'N';
   }
