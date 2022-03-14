@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="org.happycyclops.oc_weather_assignment">
    <application
-        android:label="oc_weather_assignment"
+        android:label="OC Weather"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
