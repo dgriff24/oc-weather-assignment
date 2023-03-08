@@ -6,6 +6,8 @@ import 'package:provider/provider.dart';
 import '../view_models/weather_view_model.dart';
 
 class HomePage extends StatelessWidget {
+  const HomePage({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<WeatherViewModel>(
@@ -37,16 +39,16 @@ class HomePage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(weather.currentTemp.toString(),
-                style: TextStyle(fontSize: 120)),
-            Padding(
-              padding: const EdgeInsets.only(top: 14.0, left: 8.0),
+                style: const TextStyle(fontSize: 120)),
+            const Padding(
+              padding: EdgeInsets.only(top: 14.0, left: 8.0),
               child: Text('°F', style: TextStyle(fontSize: 50)),
             ),
           ],
         ),
         Text(
           'Feels like: ${weather.feelsLike}°',
-          style: TextStyle(fontSize: 30),
+          style: const TextStyle(fontSize: 30),
         ),
       ],
     );
@@ -66,7 +68,7 @@ class HomePage extends StatelessWidget {
       children: [
         Row(
           children: [
-            Icon(
+            const Icon(
               MdiIcons.weatherWindy,
               size: 30,
             ),
@@ -79,7 +81,7 @@ class HomePage extends StatelessWidget {
         ),
         Text(
           '${weather.windSpeed} mph',
-          style: TextStyle(fontSize: 18),
+          style: const TextStyle(fontSize: 18),
         ),
       ],
     );
@@ -88,20 +90,20 @@ class HomePage extends StatelessWidget {
   Widget _humidityWidget(WeatherViewModel weather) {
     return Row(
       children: [
-        Icon(
+        const Icon(
           MdiIcons.waterOutline,
           size: 50,
         ),
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
+            const Text(
               'Hum',
               style: TextStyle(fontSize: 18),
             ),
             Text(
               '${weather.humidity}%',
-              style: TextStyle(fontSize: 18),
+              style: const TextStyle(fontSize: 18),
             ),
           ],
         ),
@@ -124,7 +126,7 @@ class HomePage extends StatelessWidget {
     return Center(
       child: Column(
         mainAxisSize: MainAxisSize.min,
-        children: [
+        children: const [
           CircularProgressIndicator(),
           Text('Loading...'),
         ],
@@ -136,19 +138,19 @@ class HomePage extends StatelessWidget {
     return SafeArea(
       child: Stack(
         children: [
-          Positioned(
+          const Positioned(
             top: 12,
             right: 0,
             height: 75,
-            child: const Image(image: AssetImage('assets/oc_logo.png')),
+            child: Image(image: AssetImage('assets/oc_logo.png')),
           ),
           Column(
             children: [
-              Spacer(flex: 3),
+              const Spacer(flex: 3),
               _weatherSymbol(weather),
-              Spacer(flex: 1),
+              const Spacer(flex: 1),
               _temperatureWidget(weather),
-              Spacer(flex: 3),
+              const Spacer(flex: 3),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
@@ -156,10 +158,10 @@ class HomePage extends StatelessWidget {
                   _humidityWidget(weather),
                 ],
               ),
-              Spacer(flex: 3),
+              const Spacer(flex: 3),
               Text(
                   'Last Refreshed: ${_formatLastUpdated(weather.lastUpdated)}'),
-              SizedBox(height: 12),
+              const SizedBox(height: 12),
             ],
           ),
         ],
