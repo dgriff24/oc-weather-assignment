@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-// import 'package:crypto/crypto.dart';
+import 'package:crypto/crypto.dart';
 import 'package:http/http.dart' as http;
 
 import '../model/weather_data.dart';
@@ -24,5 +24,4 @@ class WeatherlinkData {
 
     return WeatherData.fromWeatherlink(jsonDecode(response.body));
   }
-
 }
