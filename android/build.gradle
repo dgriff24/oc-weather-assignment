@@ -1,21 +1,18 @@
 buildscript {
-    ext.kotlin_version = '1.6.10'
+    ext.kotlin_version = '1.9.23'  // Updated Kotlin version for AGP 8.3.0
     repositories {
         google()
         mavenCentral()
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.1.0'
+        classpath 'com.android.tools.build:gradle:8.3.0'  // AGP version compatible with Gradle 8.14
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
 
 allprojects {
-    repositories {
-        google()
-        mavenCentral()
-    }
+    // Repositories are now declared in settings.gradle
 }
 
 rootProject.buildDir = '../build'

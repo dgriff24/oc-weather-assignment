@@ -2,13 +2,13 @@ import '../model/weather_data.dart';
 
 class FakeData {
   Future<WeatherData> getWeather() => Future.value(WeatherData(
-        humidity: 79,
+        humidity: 99,
         lastUpdated: DateTime.now(),
         loadedSuccessfully: true,
         temperatureUnit: TemperatureUnit.fahrenheit,
         windDirection: 90,
-        windSpeed: 15,
-        feelsLikeTemperature: 13,
-        temperature: 27,
+        windSpeed: 98,
+        feelsLikeTemperature: 97,
+        temperature: 96,
       ));
 }

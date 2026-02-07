@@ -30,8 +30,9 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: ocMaroon,
 
         textTheme: const TextTheme(
-          bodyText1: TextStyle(),
-          bodyText2: TextStyle(),
+          bodyLarge: TextStyle(),
+          bodyMedium: TextStyle(),
+          bodySmall: TextStyle(),
         ).apply(
           bodyColor: ocWhite,
         ),

@@ -1,11 +1,59 @@
+pluginManagement {
+    def flutterSdkPath = null
+    if (System.env.FLUTTER_SDK) {
+        flutterSdkPath = System.env.FLUTTER_SDK
+    } else {
+        def properties = new Properties()
+        def localPropertiesFile = new File(settingsDir, 'local.properties')
+        if (localPropertiesFile.exists()) {
+            localPropertiesFile.withReader('UTF-8') { reader -> properties.load(reader) }
+            flutterSdkPath = properties.getProperty('flutter.sdk')
+        }
+    }
+
+    if (flutterSdkPath == null) {
+        throw new GradleException("Flutter SDK not found. Define location with flutter.sdk in the local.properties file or with a .flutter-sdk file in the project root.")
+    }
+
+    includeBuild("$flutterSdkPath/packages/flutter_tools/gradle")
+    
+    repositories {
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+    }
+}
+
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.PREFER_SETTINGS)
+    repositories {
+        google()
+        mavenCentral()
+        // Add the Flutter Maven repository
+        // Use the Flutter SDK path from local.properties
+        maven {
+            def flutterSdkPath = null
+            def properties = new Properties()
+            def localPropertiesFile = new File(settingsDir, 'local.properties')
+            if (localPropertiesFile.exists()) {
+                localPropertiesFile.withReader('UTF-8') { reader -> properties.load(reader) }
+                flutterSdkPath = properties.getProperty('flutter.sdk')
+            }
+            if (flutterSdkPath == null) {
+                throw new GradleException('Flutter SDK not found. Define location with flutter.sdk in the local.properties file.')
+            }
+            url "$flutterSdkPath/bin/cache/artifacts/engine/android-arm"
+        }
+        maven {
+            url "https://storage.googleapis.com/download.flutter.io"
+        }
+    }
+}
+
+// Include the Flutter Gradle plugin
+def flutterPluginsFile = new File(settingsDir, '../.flutter-plugins')
+if (flutterPluginsFile.exists()) {
+    apply from: flutterPluginsFile
+}
+
 include ':app'
-
-def localPropertiesFile = new File(rootProject.projectDir, "local.properties")
-def properties = new Properties()
-
-assert localPropertiesFile.exists()
-localPropertiesFile.withReader("UTF-8") { reader -> properties.load(reader) }
-
-def flutterSdkPath = properties.getProperty("flutter.sdk")
-assert flutterSdkPath != null, "flutter.sdk not set in local.properties"
-apply from: "$flutterSdkPath/packages/flutter_tools/gradle/app_plugin_loader.gradle"
