@@ -16,7 +16,7 @@ class WeatherlinkData {
   final httpClient = http.Client();
 
   Future<WeatherData> getWeather() async {
-    final requestUrl = '<add request url>';
+    const requestUrl = '<add request url>';
 
     print(requestUrl);
 
