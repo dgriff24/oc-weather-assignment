@@ -16,7 +16,7 @@ class Weatherlink {
       final data = jsonDecode(response.body) as Map<String, dynamic>;
       return Weather.fromWeatherlink(data);
     } else {
-      throw Exception('Failed to load weather data: ${response.statusCode}');
+      return Weather.fromWeatherlink({});
     }
   }
 }
