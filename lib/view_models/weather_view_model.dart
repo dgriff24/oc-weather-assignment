@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 
-import '../model/weather_data.dart';
-import '../services/fake_data.dart';
+import '../model/weather.dart';
+import '../services/weatherlink.dart';
 
 class WeatherViewModel extends ChangeNotifier {
-  late WeatherData _weatherData;
+  late Weather _weatherData;
+  final _weatherlinkData = Weatherlink();
 
   bool isLoading = true;
 
@@ -23,7 +24,7 @@ class WeatherViewModel extends ChangeNotifier {
   String get windDirection {
     final dir = _weatherData.windDirection;
     // TODO add logic to convert the direction to N, NNE, NE, ENE, E, ESE, SE, SSE, S, SSW, SW, WSW, W, WNW, NW, NNW
-    return 'N';
+    return 'E';
   }
 
   int get windSpeed {
@@ -31,7 +32,7 @@ class WeatherViewModel extends ChangeNotifier {
   }
 
   int get humidity {
-    return _weatherData.humidity.round();
+    return _weatherData.humidity;
   }
 
   DateTime get lastUpdated {
@@ -46,9 +47,12 @@ class WeatherViewModel extends ChangeNotifier {
     isLoading = true;
     notifyListeners();
 
-    final weatherFuture = FakeData().getWeather();
+    final weatherFuture = _weatherlinkData.getWeather();
     final timingFuture = Future.delayed(const Duration(milliseconds: 800));
-    _weatherData = (await  Future.wait([weatherFuture, timingFuture]))[0];
+    _weatherData = await weatherFuture;
+
+    // for visualization purposes
+    await timingFuture;
 
     isLoading = false;
     notifyListeners();

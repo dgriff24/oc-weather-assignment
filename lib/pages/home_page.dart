@@ -6,26 +6,21 @@ import 'package:provider/provider.dart';
 import '../view_models/weather_view_model.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({Key? key}) : super(key: key);
+  const HomePage({super.key});
+
+  static const _defaultSpacer = SizedBox(height: 12);
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<WeatherViewModel>(
       create: (_) => WeatherViewModel(),
-      builder: (context, _) => Consumer<WeatherViewModel>(
+        builder: (_, __) => Consumer<WeatherViewModel>(
         builder: (context, weather, _) => Scaffold(
           floatingActionButton: FloatingActionButton(
-            onPressed: () {
-              weather.refresh();
-            },
+            onPressed: weather.refresh,
             child: const Icon(MdiIcons.refresh),
           ),
-          body: Builder(
-            builder: (_) {
-              if (weather.isLoading) return _loading();
-              return _loadedBody(weather);
-            },
-          ),
+          body: weather.isLoading ? _loading() : _loadedBody(weather),
         ),
       ),
     );
@@ -64,18 +59,14 @@ class HomePage extends StatelessWidget {
 
   Widget _windWidget(WeatherViewModel weather) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
           children: [
-            const Icon(
-              MdiIcons.weatherWindy,
-              size: 30,
-            ),
+            const Icon(MdiIcons.weatherWindy, size: 30),
             Text(
               weather.windDirection,
               style: TextStyle(
-                  fontSize: _windDirectionFontSize(weather.windDirection)),
+                  fontSize: weather.windDirection.length == 1 ? 30 : 20),
             ),
           ],
         ),
@@ -90,43 +81,24 @@ class HomePage extends StatelessWidget {
   Widget _humidityWidget(WeatherViewModel weather) {
     return Row(
       children: [
-        const Icon(
-          MdiIcons.waterOutline,
-          size: 50,
-        ),
+        const Icon(MdiIcons.waterOutline, size: 50),
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              'Hum',
-              style: TextStyle(fontSize: 18),
-            ),
-            Text(
-              '${weather.humidity}%',
-              style: const TextStyle(fontSize: 18),
-            ),
+            const Text('Hum', style: TextStyle(fontSize: 18)),
+            Text('${weather.humidity}%', style: const TextStyle(fontSize: 18)),
           ],
         ),
       ],
     );
   }
 
-  double _windDirectionFontSize(String windDirection) {
-    switch (windDirection.length) {
-      case 1:
-        return 24;
-      case 2:
-        return 20;
-      default:
-        return 16;
-    }
-  }
 
   Widget _loading() {
-    return Center(
+    return const Center(
       child: Column(
         mainAxisSize: MainAxisSize.min,
-        children: const [
+        children: [
           CircularProgressIndicator(),
           Text('Loading...'),
         ],
@@ -138,11 +110,11 @@ class HomePage extends StatelessWidget {
     return SafeArea(
       child: Stack(
         children: [
-          const Positioned(
+          Positioned(
             top: 12,
             right: 0,
             height: 75,
-            child: Image(image: AssetImage('assets/oc_logo.png')),
+            child: Image.asset('assets/oc_logo.png'),
           ),
           Column(
             children: [
@@ -161,7 +133,7 @@ class HomePage extends StatelessWidget {
               const Spacer(flex: 3),
               Text(
                   'Last Refreshed: ${_formatLastUpdated(weather.lastUpdated)}'),
-              const SizedBox(height: 12),
+              _defaultSpacer,
             ],
           ),
         ],
